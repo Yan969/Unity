@@ -1,4 +1,4 @@
-### #gameObject.GetComponent<Transform>() 与 transform.GetComponent<T>()  
+## gameObject.GetComponent<Transform>() 与 transform.GetComponent<T>()  
 gameObject.GetComponent<Transform>()：获取gameObject的Transform组件  
 transform.GetComponent<T>()：获取组件transform所在gameObject的T组件  
 ```c#
