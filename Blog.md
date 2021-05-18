@@ -20,4 +20,8 @@ transform.GetComponent<T>()：获取组件transform所在gameObject的T组件
                 GetControllableParticleSystems(t.GetChild(i), roots, subEmitters);
             }
         }
-```
+```  
+
+# Time.deltaTime增量时间  
+
+[转载：增量时间详解](https://blog.csdn.net/ChinarCSDN/article/details/82914420)
