@@ -62,6 +62,63 @@ public class Example : MonoBehaviour
 ```Simulate(float t, bool withChildren, bool restart, bool fixedTimeStep);``` 模拟粒子发射，既可以模拟某个时间点的粒子效果，也可以模拟粒子整个发射过程。  
 当参数restart设置为true时，模拟某个时间点的粒子效果，此时时间t应该为某一时间点，例```Simulate(1, false, true，restart, false);```表示模拟粒子1s时的效果；当参数为false时，t应该为deltaTime，意为某一时间增量，此时simulate函数可以在Update或者FixUpdate里每帧调用，模拟整个发射过程。  
 【**倍速播放粒子效果**】让粒子以某倍速factor前进，实现快进或慢进，可以在Update里调用```Simulete（deltaTime * factor，false，false，false）```。  
-
-[转载自Burning：https://zhuanlan.zhihu.com/p/96086877](https://zhuanlan.zhihu.com/p/96086877)
+[转载自Burning：https://zhuanlan.zhihu.com/p/96086877](https://zhuanlan.zhihu.com/p/96086877)  
+【**不受缩放因子（Time.timeScale）的影响**】Unity中默认的动画Animation、Animator、粒子特效ParticleSystem等和时间有关的都会受到时间缩放因子（Time.timeScale）的影响。但有时候我们希望它们不受Time.timeScale影响：比如在实现一个类型“子弹时间”的效果时，UI特效是正常播放的, 实现如下：  
+1. Particle System: ParticleSystem类似Animation需要在Update中用真实的游戏时间做动画采样  
+```c#
+public class RealParticleSystem : MonoBehaviour
+{
+    // Field
+    private ParticleSystem mParticle;
+ 
+    // Method
+    private void Awake()
+    {
+        if (mParticle == null)
+            mParticle = gameObject.GetComponent<ParticleSystem>();
+    }
+ 
+    private void Update()
+    {
+        if (mParticle == null)
+            return;
+        mParticle.Simulate(Time.unscaledDeltaTime, true, false);
+    }
+}
+```  
+2. Animation: Animation需要在Update中用真实的游戏时间做动画采样  
+```c#
+[RequireComponent(typeof(Animation))]
+public class RealAnimation : MonoBehaviour
+{
+    // Field
+    private Animation mAnim;
+    private float time = 0;
+ 
+    // Method
+    private void Awake()
+    {
+        if (mAnim == null)
+            mAnim = gameObject.GetComponent<Animation>();
+    }
+ 
+    private void Update()
+    {
+        if (mAnim == null)
+            return;
+        time += Time.unscaledDeltaTime;
+        foreach (AnimationState anim in mAnim)
+        {
+            if (mAnim.IsPlaying(anim.name))
+                anim.normalizedTime = time / anim.length;
+        }
+        mAnim.Sample();
+    }
+}
+```
+3. Animator: Animator比较简单，Unity原生支持，只需更改Animator.updateMode即可  
+```c#
+mAnimator.updateMode = AnimatorUpdateMode.UnscaledTime;
+```  
+[转自cube454517408：https://blog.csdn.net/cube454517408/article/details/107563746](https://blog.csdn.net/cube454517408/article/details/107563746)
 
