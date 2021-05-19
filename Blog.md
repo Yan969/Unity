@@ -59,7 +59,7 @@ public class Example : MonoBehaviour
 ```
 # Particle System  
 ## ParticleSystem.Simulate  
-Simulate(float t, bool withChildren, bool restart, bool fixedTimeStep); 模拟粒子发射，既可以模拟某个时间点的粒子效果，也可以模拟粒子整个发射过程。  
+```Simulate(float t, bool withChildren, bool restart, bool fixedTimeStep);``` 模拟粒子发射，既可以模拟某个时间点的粒子效果，也可以模拟粒子整个发射过程。  
 当参数restart设置为true时，模拟某个时间点的粒子效果，此时时间t应该为某一时间点，例Simulate(1, false, true，restart, false);表示模拟粒子1s时的效果；当参数为false时，t应该为deltaTime，意为某一时间增量，此时simulate函数可以在Update或者FixUpdate里每帧调用，模拟整个发射过程。  
 【**倍速播放粒子效果**】让粒子以某倍速factor前进，实现快进或慢进，可以在Update里调用Simulete（deltaTime * factor，false，false，false）  
 
