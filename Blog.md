@@ -122,3 +122,32 @@ mAnimator.updateMode = AnimatorUpdateMode.UnscaledTime;
 ```  
 [转自cube454517408：https://blog.csdn.net/cube454517408/article/details/107563746](https://blog.csdn.net/cube454517408/article/details/107563746)
 
+# Timeline 
+【**倒放**】可以通过PlayableDirector的time属性，从大到小，即可实现倒放  
+```c#
+using UnityEngine;
+using UnityEngine.Playables;
+
+public class Runner: MonoBehaviour
+{
+    public PlayableDirector timelinePlayer;
+    private double m_timer;
+
+    void Start()
+    {
+    	// 获取总时长
+        m_timer = timelinePlayer.duration;
+        timelinePlayer.Play();
+    }
+
+    void Update()
+    {
+        // 倒放
+        if (m_timer > 0)
+            m_timer -= Time.deltaTime;
+        timelinePlayer.time = m_timer;
+    }
+}
+``` 
+[转载自林新发：https://blog.csdn.net/linxinfa/article/details/108374878](https://blog.csdn.net/linxinfa/article/details/108374878)
+
