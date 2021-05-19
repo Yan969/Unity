@@ -25,7 +25,7 @@
 # Time  
 ## Time.deltaTime 增量时间  
 10米 = (1/60 * 10米/秒) *60  
-这样更好理解，帧速率是60，Time.deltaTime是一个1/60切割器，把10米/秒切成60份，然后在一秒钟内执行60次。
+这样更好理解，帧速率是60，```Time.deltaTime```是一个1/60切割器，把10米/秒切成60份，然后在一秒钟内执行60次。
 
 [增量时间详解：https://blog.csdn.net/ChinarCSDN/article/details/82914420](https://blog.csdn.net/ChinarCSDN/article/details/82914420)  
 ## Time.timeScale 时间缩放因子 
