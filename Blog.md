@@ -153,4 +153,7 @@ public class Runner: MonoBehaviour
 
 # Playable
 [Playable API：定制你的动画系统 简单使用](https://blog.csdn.net/wangjiangrong/article/details/105630666)
+[Playable API：定制你的动画系统 简单使用](https://www.it610.com/article/1296811372927066112.htm)
+[官方使用例子](https://docs.unity3d.com/2017.2/Documentation/Manual/Playables-Examples.html)
+[官方教程](https://mp.weixin.qq.com/s?__biz=MzU5MjQ1NTEwOA==&mid=2247493316&idx=1&sn=7e4fef834a8066faca3d2f1f1a090bb4&chksm=fe1dd26fc96a5b79856840f556cf65026facb83520ac1891605e42d5e777d30a0d5219060e21&mpshare=1&scene=1&srcid=0606YJLYnfprk9UjpPQCnre1#rd)
 
