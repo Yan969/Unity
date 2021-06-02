@@ -151,3 +151,6 @@ public class Runner: MonoBehaviour
 ``` 
 [转载自林新发：https://blog.csdn.net/linxinfa/article/details/108374878](https://blog.csdn.net/linxinfa/article/details/108374878)
 
+# Playable
+[Playable API：定制你的动画系统 简单使用](https://blog.csdn.net/wangjiangrong/article/details/105630666)
+
