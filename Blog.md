@@ -158,4 +158,96 @@ public class Runner: MonoBehaviour
 [Playable API：定制你的动画系统 简单使用](https://www.it610.com/article/1296811372927066112.htm)
 [官方使用例子](https://docs.unity3d.com/2017.2/Documentation/Manual/Playables-Examples.html)
 [官方教程](https://mp.weixin.qq.com/s?__biz=MzU5MjQ1NTEwOA==&mid=2247493316&idx=1&sn=7e4fef834a8066faca3d2f1f1a090bb4&chksm=fe1dd26fc96a5b79856840f556cf65026facb83520ac1891605e42d5e777d30a0d5219060e21&mpshare=1&scene=1&srcid=0606YJLYnfprk9UjpPQCnre1#rd)
-[可视化工具]()
+[可视化工具]()  
+# Audio
+## AudioClip
+**编辑模式下利用反射播放AudioClip**
+```c#
+using UnityEngine;
+using UnityEditor;
+using System;
+using System.Reflection;
+ 
+public static class EditorSFX
+{
+ 
+    public static void PlayClip(AudioClip clip, int startSample = 0, bool loop = false)
+    {
+        Assembly unityEditorAssembly = typeof(AudioImporter).Assembly;
+     
+        Type audioUtilClass = unityEditorAssembly.GetType("UnityEditor.AudioUtil");
+        MethodInfo method = audioUtilClass.GetMethod(
+            "PlayPreviewClip",
+            BindingFlags.Static | BindingFlags.Public,
+            null,
+            new Type[] { typeof(AudioClip), typeof(int), typeof(bool) },
+            null
+        );
+ 
+        Debug.Log(method);
+        method.Invoke(
+            null,
+            new object[] { clip, startSample, loop }
+        );
+    }
+ 
+    public static void StopAllClips()
+    {
+        Assembly unityEditorAssembly = typeof(AudioImporter).Assembly;
+ 
+        Type audioUtilClass = unityEditorAssembly.GetType("UnityEditor.AudioUtil");
+        MethodInfo method = audioUtilClass.GetMethod(
+            "StopAllPreviewClips",
+            BindingFlags.Static | BindingFlags.Public,
+            null,
+            new Type[] { },
+            null
+        );
+ 
+        Debug.Log(method);
+        method.Invoke(
+            null,
+            new object[] { }
+        );
+    }
+}
+```  
+**【扩展】**  
+从某个采样/时间点开始播放音频  
+```c#
+sampleStart = (int)Math.Ceiling (audioClip.samples * ((__sequence.timeCurrent - node.startTime) / audioClip.length));//do your calculation
+                     
+AudioUtilW.PlayClip (audioClip, 0, node.loop);//startSample doesn't work in this function????
+AudioUtilW.SetClipSamplePosition (audioClip, sampleStart);  
+``` 
+或者  
+```c#
+ AudioUtility.PlayClip(selectedAudioClip);
+ //Get desired position as percentage
+ var desiredClipPercentagePos = desiredTime / selectedAudioClip.length;
+ //Get the number of samples:
+ var samples = AudioUtility.GetSampleCount(selectedAudioClip);
+ //Then, simply multiply your percentage against that:
+ int playFrom = Mathf.FloorToInt(samples * desiredClipPercentagePos);
+ AudioUtility.SetClipSamplePosition(selectedAudioClip, playFrom);
+```  
+**【Example】**  
+I want to play at a position that's 50% of the way through the clip:  
+First, get the number of samples:  
+```c#
+var samples = AudioUtility.GetSampleCount(source.clip);
+```  
+Then, simply multiply your percentage against that:  
+```c#
+int playFrom = Mathf.FloorToInt(samples * 0.5f);
+```  
+Then, use it together:
+```c#
+AudioUtility.PlayClip(source.clip, playFrom, false);
+AudioUtility.SetClipSamplePosition(source.clip, playFrom);
+```  
+
+[Way to play audio in editor using an editor script?](https://forum.unity.com/threads/way-to-play-audio-in-editor-using-an-editor-script.132042/)  
+[How to Play AudioClip from Editor from a Start Sample/Time](https://answers.unity.com/questions/844896/how-to-play-audioclip-from-editor-from-a-start-sam.html?_gl=1*czio5y*_ga*MzQ1MTQ5MjE0LjE2MTg0NTY3ODM.*_ga_1S78EFL1W5*MTYyMjYzMDUwMi4zLjEuMTYyMjYzMTc1NC4w&_ga=2.116201422.97339729.1622515344-345149214.1618456783#)  
+[Reflected AudioUtil class for making audio based Editor Extensions](https://forum.unity.com/threads/reflected-audioutil-class-for-making-audio-based-editor-extensions.308133/)
+
