@@ -20,7 +20,10 @@
                 GetControllableParticleSystems(t.GetChild(i), roots, subEmitters);
             }
         }
-```  
+```    
+# RectTransform
+[详解：https://blog.csdn.net/jmu201521121014/article/details/105725175](https://blog.csdn.net/jmu201521121014/article/details/105725175)  
+
 
 # Time  
 ## Time.deltaTime 增量时间  
