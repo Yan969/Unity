@@ -254,5 +254,6 @@ AudioUtility.SetClipSamplePosition(source.clip, playFrom);
 [How to Play AudioClip from Editor from a Start Sample/Time](https://answers.unity.com/questions/844896/how-to-play-audioclip-from-editor-from-a-start-sam.html?_gl=1*czio5y*_ga*MzQ1MTQ5MjE0LjE2MTg0NTY3ODM.*_ga_1S78EFL1W5*MTYyMjYzMDUwMi4zLjEuMTYyMjYzMTc1NC4w&_ga=2.116201422.97339729.1622515344-345149214.1618456783#)  
 [Reflected AudioUtil class for making audio based Editor Extensions](https://forum.unity.com/threads/reflected-audioutil-class-for-making-audio-based-editor-extensions.308133/)  
 [自定义参考：https://www.programmersought.com/article/65214557718/](https://www.programmersought.com/article/65214557718/)  
-[自定义：https://blog.unity.com/technology/extending-timeline-a-practical-guide](https://blog.unity.com/technology/extending-timeline-a-practical-guide)
+[自定义：https://blog.unity.com/technology/extending-timeline-a-practical-guide](https://blog.unity.com/technology/extending-timeline-a-practical-guide)  
+[MarkerEditor](https://docs.unity3d.com/Packages/com.unity.timeline@1.2/api/UnityEditor.Timeline.TrackEditor.html)
 
