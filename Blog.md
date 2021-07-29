@@ -257,3 +257,30 @@ AudioUtility.SetClipSamplePosition(source.clip, playFrom);
 [自定义：https://blog.unity.com/technology/extending-timeline-a-practical-guide](https://blog.unity.com/technology/extending-timeline-a-practical-guide)  
 [MarkerEditor](https://docs.unity3d.com/Packages/com.unity.timeline@1.2/api/UnityEditor.Timeline.TrackEditor.html)
 
+# Camera
+水平翻转Camera（屏幕镜像效果）可以使用```camera.projectionMatrix ```自定义投影矩阵缩放x轴  
+``` C#
+ using UnityEngine;
+ [RequireComponent(typeof(Camera))]
+ [ExecuteInEditMode]
+ public class MirrorFlipCamera : MonoBehaviour {
+     new Camera camera;
+     public bool flipHorizontal;
+     void Awake () {
+         camera = GetComponent<Camera>();
+     }
+     void OnPreCull() {
+         camera.ResetWorldToCameraMatrix();
+         camera.ResetProjectionMatrix();
+         Vector3 scale = new Vector3(flipHorizontal ? -1 : 1, 1, 1);
+         camera.projectionMatrix = camera.projectionMatrix * Matrix4x4.Scale(scale);
+     }
+     void OnPreRender () {
+         GL.invertCulling = flipHorizontal;   //没有这行，会出现Culling（剔除）的问题
+     }
+     
+     void OnPostRender () {
+         GL.invertCulling = false;
+     }
+ }
+```  
